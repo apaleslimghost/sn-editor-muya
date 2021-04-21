@@ -1,5 +1,7 @@
 import Muya from './marktext/src/muya/lib'
 import './marktext/src/muya/themes/default.css'
+import './marktext/src/renderer/assets/themes/material-dark.theme.css'
+import './index.css'
 
 import TablePicker from './marktext/src/muya/lib/ui/tablePicker'
 import QuickInsert from './marktext/src/muya/lib/ui/quickInsert'
@@ -36,6 +38,7 @@ Muya.use(TableBarTools)
 
 function init() {
    const textarea = document.createElement('div')
+   textarea.classList.add('editor-wrapper')
    document.body.append(textarea)
    const editor = new Muya(textarea, {})
    editor.init()
