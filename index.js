@@ -1,5 +1,6 @@
 import Muya from './marktext/src/muya/lib'
 import ComponentRelay from '@standardnotes/component-relay'
+import debounce from 'lodash.debounce'
 
 import './marktext/src/muya/themes/default.css'
 import './marktext/src/renderer/assets/themes/material-dark.theme.css'
@@ -63,7 +64,7 @@ function init() {
       editor.setMarkdown(note.content.text)
    })
 
-   editor.on('change', change => {
+   editor.on('change', debounce(change => {
       if(currentNote) {
          const note = currentNote
          relay.saveItemWithPresave(note, () => {
@@ -73,7 +74,7 @@ function init() {
             note.content.text = md
          })
       }
-   })
+   }, 100))
 }
 
 document.addEventListener('DOMContentLoaded', init)

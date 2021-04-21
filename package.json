@@ -51,6 +51,7 @@
     "katex": "^0.11.1",
     "keyboard-layout": "^2.0.17",
     "keytar": "^7.3.0",
+    "lodash.debounce": "^4.0.8",
     "markdown-toc": "^1.2.0",
     "mermaid": "^8.8.4",
     "mousetrap": "^1.6.5",
