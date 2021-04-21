@@ -1,0 +1,3 @@
+[submodule "marktext"]
+	path = marktext
+	url = https://github.com/marktext/marktext
