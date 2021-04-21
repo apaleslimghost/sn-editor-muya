@@ -1,4 +1,6 @@
 import Muya from './marktext/src/muya/lib'
+import ComponentRelay from '@standardnotes/component-relay'
+
 import './marktext/src/muya/themes/default.css'
 import './marktext/src/renderer/assets/themes/material-dark.theme.css'
 import './index.css'
@@ -36,13 +38,42 @@ Muya.use(LinkTools, {
 Muya.use(FootnoteTool)
 Muya.use(TableBarTools)
 
+let currentNote
+
 function init() {
+
    const textarea = document.createElement('div')
    textarea.classList.add('editor-wrapper')
    document.body.append(textarea)
    const editor = new Muya(textarea, {})
    editor.init()
-   editor.on('change', console.log)
+
+   const relay = new ComponentRelay({
+      targetWindow: window,
+      permissions: [{name: "stream-context-item"}],
+      onReady: () => {
+         console.log(relay)
+      }
+   })
+
+   relay.streamContextItem(note => {
+      currentNote = note
+      if(note.content.text === editor.getMarkdown()) return
+      console.log('FROM SN', JSON.stringify(note.content.text))
+      editor.setMarkdown(note.content.text)
+   })
+
+   editor.on('change', change => {
+      if(currentNote) {
+         const note = currentNote
+         relay.saveItemWithPresave(note, () => {
+            const md = editor.getMarkdown()
+            if (note.content.text === md) return
+            console.log('FROM MUYA', JSON.stringify(md))
+            note.content.text = md
+         })
+      }
+   })
 }
 
 document.addEventListener('DOMContentLoaded', init)
