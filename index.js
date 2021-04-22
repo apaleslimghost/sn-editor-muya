@@ -18,6 +18,8 @@ import FootnoteTool from './marktext/src/muya/lib/ui/footnoteTool'
 import TableBarTools from './marktext/src/muya/lib/ui/tableTools'
 import FrontMenu from './marktext/src/muya/lib/ui/frontMenu'
 
+// TODO undo/redo, find, inserting images, finish theming,
+
 Muya.use(TablePicker)
 Muya.use(QuickInsert)
 Muya.use(CodePicker)
