@@ -5,7 +5,7 @@ body {
 
 :root {
    /*editor*/
-   --themeColor: #f48237;
+   --themeColor: var(--sn-stylekit-info-color);
    --themeColor90: rgba(244, 130, 55, .9);
    --themeColor80: rgba(244, 130, 55, .8);
    --themeColor70: rgba(244, 130, 55, .7);
@@ -101,6 +101,11 @@ body {
  .open-project button,
  .recent-files-projects button {
    box-shadow: none !important;
+ }
+
+ li.ag-task-list-item > input[type=checkbox]::before {
+    left: -4px;
+    top: -4px;
  }
 
  /* ------------------------------------ */

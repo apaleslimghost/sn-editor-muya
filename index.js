@@ -1,9 +1,7 @@
 import Muya from './marktext/src/muya/lib'
 import ComponentRelay from '@standardnotes/component-relay'
-import debounce from 'lodash.debounce'
 
 import './marktext/src/muya/themes/default.css'
-import './marktext/src/renderer/assets/themes/material-dark.theme.css'
 import './index.css'
 
 import TablePicker from './marktext/src/muya/lib/ui/tablePicker'
@@ -40,6 +38,8 @@ Muya.use(FootnoteTool)
 Muya.use(TableBarTools)
 
 let currentNote
+let saving = false
+let saveTimeout
 
 function init() {
 
@@ -47,7 +47,6 @@ function init() {
    textarea.classList.add('editor-wrapper')
    document.body.append(textarea)
    const editor = new Muya(textarea, {})
-   editor.init()
 
    const relay = new ComponentRelay({
       targetWindow: window,
@@ -59,22 +58,24 @@ function init() {
 
    relay.streamContextItem(note => {
       currentNote = note
-      if(note.content.text === editor.getMarkdown()) return
-      console.log('FROM SN', JSON.stringify(note.content.text))
+      if(saving || note.content.text === editor.getMarkdown()) return
       editor.setMarkdown(note.content.text)
    })
 
-   editor.on('change', debounce(change => {
+   editor.on('change', change => {
       if(currentNote) {
          const note = currentNote
          relay.saveItemWithPresave(note, () => {
+            saving = true
+            clearTimeout(saveTimeout)
+            saveTimeout = setTimeout(() => { saving = false }, 100)
+
             const md = editor.getMarkdown()
             if (note.content.text === md) return
-            console.log('FROM MUYA', JSON.stringify(md))
             note.content.text = md
          })
       }
-   }, 100))
+   })
 }
 
 document.addEventListener('DOMContentLoaded', init)
