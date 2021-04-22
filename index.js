@@ -32,7 +32,9 @@ Muya.use(ImageToolbar)
 Muya.use(FormatPicker)
 Muya.use(FrontMenu)
 Muya.use(LinkTools, {
-   jumpClick: console.log
+   jumpClick({ href }) {
+      window.open(href)
+   }
 })
 Muya.use(FootnoteTool)
 Muya.use(TableBarTools)
