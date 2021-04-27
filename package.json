@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "parcel index.html"
+    "start": "webpack serve",
+    "build": "webpack build"
   },
   "repository": {
     "type": "git",
@@ -55,6 +56,7 @@
     "mermaid": "^8.8.4",
     "mousetrap": "^1.6.5",
     "muya": "^0.1.2",
+    "node-libs-browser": "^2.2.1",
     "ot-json1": "^0.2.4",
     "plist": "^3.0.1",
     "popper.js": "^1.16.1",

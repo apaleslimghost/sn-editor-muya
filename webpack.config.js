@@ -11,6 +11,10 @@ module.exports = {
   entry: {
     renderer: path.join(__dirname, './index.js')
   },
+  node: {
+    fs: 'empty',
+    path: true,
+  },
   module: {
     rules: [
       {
